@@ -23,6 +23,6 @@
     大家也可以看到上面目录中有一个appSample.apk，也可下载安装该安装包预览效果。
     如果对大家有帮助希望大家多多click star O(∩_∩)O，大家也可以加入交流群相互交流。
     
-*注意：转载请说明出处
+* 注意：转载请说明出处
 
 ![](https://github.com/Qiang3570/LiveLayout/blob/master/sample.gif "示例图")
