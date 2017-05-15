@@ -1,9 +1,11 @@
-package com.johnny.livelayout;
+package com.johnny.livelayout.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.johnny.livelayout.R;
 
 /**
  * 横向listview的数据适配器，也就是观众列表，后居者可以直接根据自己的需求在这里改功能以及布局文件就ok

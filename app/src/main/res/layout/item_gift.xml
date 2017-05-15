@@ -39,7 +39,7 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <com.johnny.livelayout.CustomRoundView
+        <com.johnny.livelayout.view.CustomRoundView
             android:id="@+id/crvheadimage"
             android:layout_width="45dp"
             android:layout_height="45dp"
@@ -48,14 +48,14 @@
             app:border_width="1dp" />
     </RelativeLayout>
 
-    <com.johnny.livelayout.CustomRoundView
+    <com.johnny.livelayout.view.CustomRoundView
         android:id="@+id/ivgift"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignRight="@id/rlparent"
         android:src="@mipmap/ic_headpic" />
 
-    <com.johnny.livelayout.MagicTextView
+    <com.johnny.livelayout.view.MagicTextView
         android:id="@+id/giftNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

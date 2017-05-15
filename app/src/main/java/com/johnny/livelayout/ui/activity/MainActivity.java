@@ -1,7 +1,11 @@
-package com.johnny.livelayout;
+package com.johnny.livelayout.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import com.johnny.livelayout.ui.fragment.LiveViewFragment;
+import com.johnny.livelayout.ui.fragment.MainDialogFragment;
+import com.johnny.livelayout.R;
 
 /**
  * 该界面是LiveViewFragment与交互界面MainDialogFragment的容器

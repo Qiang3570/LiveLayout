@@ -1,4 +1,4 @@
-package com.johnny.livelayout;
+package com.johnny.livelayout.ui.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -24,6 +24,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.johnny.livelayout.R;
+import com.johnny.livelayout.adapter.AudienceAdapter;
+import com.johnny.livelayout.adapter.MessageAdapter;
+import com.johnny.livelayout.tools.DisplayUtil;
+import com.johnny.livelayout.tools.SoftKeyBoardListener;
+import com.johnny.livelayout.view.CustomRoundView;
+import com.johnny.livelayout.view.HorizontalListView;
+import com.johnny.livelayout.view.MagicTextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -99,6 +108,8 @@ public class LayerFragment extends Fragment implements View.OnClickListener {
     private List<View> giftViewCollection = new ArrayList<View>();
     private List<String> messageData=new LinkedList<>();
     private MessageAdapter messageAdapter;
+
+    private Timer timer;
 
     @Nullable
     @Override
@@ -479,7 +490,7 @@ public class LayerFragment extends Fragment implements View.OnClickListener {
                 }
             }
         };
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(task, 0, 3000);
     }
 
@@ -503,5 +514,11 @@ public class LayerFragment extends Fragment implements View.OnClickListener {
             animSet.playTogether(anim1, anim2);
             animSet.start();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
     }
 }

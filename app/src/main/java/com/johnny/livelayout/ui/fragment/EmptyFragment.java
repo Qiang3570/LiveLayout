@@ -1,4 +1,4 @@
-package com.johnny.livelayout;
+package com.johnny.livelayout.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.johnny.livelayout.R;
 
 /**
  * 该Fragment是用于MainDialogFragment中的pager，为了实现滑动隐藏交互Fragment的

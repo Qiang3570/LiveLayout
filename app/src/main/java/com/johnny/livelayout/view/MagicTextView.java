@@ -1,4 +1,4 @@
-package com.johnny.livelayout;
+package com.johnny.livelayout.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -20,6 +20,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.widget.TextView;
+
+import com.johnny.livelayout.R;
 
 import java.util.ArrayList;
 import java.util.WeakHashMap;

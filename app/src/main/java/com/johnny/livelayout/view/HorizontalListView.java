@@ -1,4 +1,4 @@
-package com.johnny.livelayout;
+package com.johnny.livelayout.view;
 
 import android.content.Context;
 import android.database.DataSetObserver;

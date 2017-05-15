@@ -1,4 +1,4 @@
-package com.johnny.livelayout;
+package com.johnny.livelayout.ui.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+
+import com.johnny.livelayout.R;
 
 /**
  * 可以看得出来这是个全屏dailogFragment，他的内部有一个pager

@@ -45,7 +45,7 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <com.johnny.livelayout.CustomRoundView
+            <com.johnny.livelayout.view.CustomRoundView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@mipmap/ic_headpic"
@@ -53,11 +53,11 @@
                 app:border_width="1dp" />
         </RelativeLayout>
 
-        <com.johnny.livelayout.HorizontalListView
+        <com.johnny.livelayout.view.HorizontalListView
             android:id="@+id/hlvaudience"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginLeft="10dp"></com.johnny.livelayout.HorizontalListView>
+            android:layout_marginLeft="10dp"></com.johnny.livelayout.view.HorizontalListView>
     </LinearLayout>
 
     <RelativeLayout

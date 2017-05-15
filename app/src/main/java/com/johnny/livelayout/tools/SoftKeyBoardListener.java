@@ -1,4 +1,4 @@
-package com.johnny.livelayout;
+package com.johnny.livelayout.tools;
 
 import android.app.Activity;
 import android.graphics.Rect;
