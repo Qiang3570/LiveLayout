@@ -6,6 +6,7 @@
 		具体代码请参考Demo，界面注释很详细，同时你也可以查看我的其他对你有帮助的Demo
     
 * 以下是示例图
+
 ![](https://github.com/Qiang3570/LiveLayout/blob/master/sample.gif)
 
 ## License
