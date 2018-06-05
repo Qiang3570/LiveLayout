@@ -113,10 +113,10 @@
         android:layout_height="146dp"
         android:layout_centerInParent="true"
         android:layout_marginLeft="12dp"
-        android:visibility="gone"
         android:background="@android:color/holo_green_light"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <com.johnny.livelayout.view.GiftItemLayout
             android:id="@+id/firstGiftItemLayout"
