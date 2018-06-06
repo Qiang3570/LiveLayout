@@ -97,40 +97,30 @@
             android:textSize="9sp" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/llgiftcontent"
+    <com.johnny.livelayout.view.GiftRootLayout
+        android:id="@+id/giftRoot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_above="@+id/lvmessage"
+        android:layout_centerInParent="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:gravity="top"
-        android:orientation="vertical" />
-
-    <com.johnny.livelayout.view.GiftRootLayout
-        android:id="@+id/gift_root"
-        android:layout_width="match_parent"
-        android:layout_height="146dp"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="12dp"
-        android:background="@android:color/holo_green_light"
         android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <com.johnny.livelayout.view.GiftItemLayout
-            android:id="@+id/firstGiftItemLayout"
+            android:id="@+id/firstItemLayout"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:visibility="invisible"
             app:gift_index="1" />
 
         <com.johnny.livelayout.view.GiftItemLayout
-            android:id="@+id/lastGiftItemLayout"
+            android:id="@+id/lastItemLayout"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_marginBottom="-14dp"
-            android:layout_marginTop="6dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:visibility="invisible"
             app:gift_index="0" />
     </com.johnny.livelayout.view.GiftRootLayout>
@@ -140,7 +130,6 @@
         android:layout_width="300dp"
         android:layout_height="150dp"
         android:layout_above="@+id/layout_bottom"
-        android:layout_marginLeft="10dp"
         android:cacheColorHint="#00000000"
         android:divider="@null"
         android:dividerHeight="5dp"
@@ -154,7 +143,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:animateLayoutChanges="true">
 
         <RelativeLayout
             android:layout_width="match_parent"

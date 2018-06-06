@@ -11,9 +11,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,13 +22,12 @@ import android.widget.TextView;
 import com.johnny.livelayout.R;
 import com.johnny.livelayout.adapter.AudienceAdapter;
 import com.johnny.livelayout.adapter.MessageAdapter;
+import com.johnny.livelayout.bean.GiftBean;
 import com.johnny.livelayout.tools.DisplayUtil;
 import com.johnny.livelayout.tools.SoftKeyBoardListener;
-import com.johnny.livelayout.view.CustomRoundView;
-import com.johnny.livelayout.view.GiftCountTextView;
+import com.johnny.livelayout.view.GiftRootLayout;
 import com.johnny.livelayout.view.HorizontalListView;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -67,7 +63,6 @@ public class LayerFragment extends Fragment {
     @BindView(R.id.llpicimage) LinearLayout llpicimage;
     @BindView(R.id.rlsentimenttime) RelativeLayout rlsentimenttime;
     @BindView(R.id.hlvaudience) HorizontalListView hlvaudience;
-    @BindView(R.id.llgiftcontent) LinearLayout llgiftcontent;
     @BindView(R.id.lvmessage) ListView lvmessage;
     @BindView(R.id.iv_privatechat) ImageView tvSendone;
     @BindView(R.id.iv_gift) ImageView tvSendtwo;
@@ -77,34 +72,22 @@ public class LayerFragment extends Fragment {
     @BindView(R.id.iv_publicchat) ImageView tvChat;
     @BindView(R.id.sendInput) TextView sendInput;
     @BindView(R.id.llinputparent) LinearLayout llInputParent;
+    @BindView(R.id.giftRoot) GiftRootLayout giftRoot;
 
     /**
      * 动画相关
      */
-    private NumAnim giftNumAnim;
-    private Animation inAnim;
-    private Animation outAnim;
     private AnimatorSet animatorSetHide = new AnimatorSet();
     private AnimatorSet animatorSetShow = new AnimatorSet();
 
-    /**
-     * 数据相关
-     */
-    private List<View> giftViewCollection = new ArrayList<View>();
     private List<String> messageData = new LinkedList<>();
     private MessageAdapter messageAdapter;
-
-    private Timer timer;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_layer, container, false);
         ButterKnife.bind(this, view);
-        inAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.gift_in);
-        outAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.gift_out);
-        giftNumAnim = new NumAnim();
-        clearTiming();
         return view;
     }
 
@@ -136,126 +119,34 @@ public class LayerFragment extends Fragment {
     }@OnClick(R.id.sendInput) void clickSendChat(){
         sendText();
     }@OnClick(R.id.iv_privatechat) void clickPrivateChat(){
-        showGift("Johnny1");
+        GiftBean bean = new GiftBean();
+        bean.setGroup(1);
+        bean.setSortNum(11);
+        bean.setGiftImage(R.mipmap.ic_launcher);
+        bean.setGiftName("送出了一个礼物");
+        bean.setUserName("A");
+        bean.setUserAvatar(R.mipmap.ic_launcher);
+        giftRoot.loadGift(bean);
     }@OnClick(R.id.iv_gift) void clickGift(){
-        showGift("Johnny2");
+        GiftBean bean = new GiftBean();
+        bean.setGroup(1);
+        bean.setSortNum(22);
+        bean.setGiftImage(R.mipmap.ic_launcher);
+        bean.setGiftName("送出了一个礼物");
+        bean.setUserName("B");
+        bean.setUserAvatar(R.mipmap.ic_launcher);
+        giftRoot.loadGift(bean);
     }@OnClick(R.id.iv_share) void clickShare(){
-        showGift("Johnny3");
+        GiftBean bean = new GiftBean();
+        bean.setGroup(1);
+        bean.setSortNum(33);
+        bean.setGiftImage(R.mipmap.ic_launcher);
+        bean.setGiftName("送出了一个礼物");
+        bean.setUserName("C");
+        bean.setUserAvatar(R.mipmap.ic_launcher);
+        giftRoot.loadGift(bean);
     }@OnClick(R.id.iv_close) void clickClose(){
-        showGift("Johnny4");
-    }
-
-    /**
-     * 添加礼物view,(考虑垃圾回收)
-     */
-    private View addGiftView() {
-        View view = null;
-        if (giftViewCollection.size() <= 0) {
-            /*如果垃圾回收中没有view,则生成一个*/
-            view = LayoutInflater.from(getActivity()).inflate(R.layout.item_gift, null);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            lp.topMargin = 10;
-            view.setLayoutParams(lp);
-            llgiftcontent.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-                @Override
-                public void onViewAttachedToWindow(View view) {
-                }
-
-                @Override
-                public void onViewDetachedFromWindow(View view) {
-                    giftViewCollection.add(view);
-                }
-            });
-        } else {
-            view = giftViewCollection.get(0);
-            giftViewCollection.remove(view);
-        }
-        return view;
-    }
-
-    /**
-     * 删除礼物view
-     */
-    private void removeGiftView(final int index) {
-        final View removeView = llgiftcontent.getChildAt(index);
-        outAnim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                llgiftcontent.removeViewAt(index);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                removeView.startAnimation(outAnim);
-            }
-        });
-    }
-
-    /**
-     * 显示礼物的方法
-     */
-    private void showGift(String tag) {
-        View giftView = llgiftcontent.findViewWithTag(tag);
-        if (giftView == null) {/*该用户不在礼物显示列表*/
-
-            if (llgiftcontent.getChildCount() > 2) {/*如果正在显示的礼物的个数超过两个，那么就移除最后一次更新时间比较长的*/
-                View giftView1 = llgiftcontent.getChildAt(0);
-                CustomRoundView picTv1 = (CustomRoundView) giftView1.findViewById(R.id.crvheadimage);
-                long lastTime1 = (Long) picTv1.getTag();
-                View giftView2 = llgiftcontent.getChildAt(1);
-                CustomRoundView picTv2 = (CustomRoundView) giftView2.findViewById(R.id.crvheadimage);
-                long lastTime2 = (Long) picTv2.getTag();
-                if (lastTime1 > lastTime2) {/*如果第二个View显示的时间比较长*/
-                    removeGiftView(1);
-                } else {/*如果第一个View显示的时间长*/
-                    removeGiftView(0);
-                }
-            }
-
-            giftView = addGiftView();/*获取礼物的View的布局*/
-            giftView.setTag(tag);/*设置view标识*/
-
-            CustomRoundView crvheadimage = (CustomRoundView) giftView.findViewById(R.id.crvheadimage);
-            final GiftCountTextView giftNum = (GiftCountTextView) giftView.findViewById(R.id.giftNum);/*找到数量控件*/
-            giftNum.setText("x1");/*设置礼物数量*/
-            crvheadimage.setTag(System.currentTimeMillis());/*设置时间标记*/
-            giftNum.setTag(1);/*给数量控件设置标记*/
-
-            llgiftcontent.addView(giftView);/*将礼物的View添加到礼物的ViewGroup中*/
-            llgiftcontent.invalidate();/*刷新该view*/
-            giftView.startAnimation(inAnim);/*开始执行显示礼物的动画*/
-            inAnim.setAnimationListener(new Animation.AnimationListener() {/*显示动画的监听*/
-                @Override
-                public void onAnimationStart(Animation animation) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    giftNumAnim.start(giftNum);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-                }
-            });
-        } else {/*该用户在礼物显示列表*/
-            CustomRoundView crvheadimage = (CustomRoundView) giftView.findViewById(R.id.crvheadimage);/*找到头像控件*/
-            GiftCountTextView giftNum = (GiftCountTextView) giftView.findViewById(R.id.giftNum);/*找到数量控件*/
-            int showNum = (Integer) giftNum.getTag() + 1;
-            giftNum.setText("x" + showNum);
-            giftNum.setTag(showNum);
-            crvheadimage.setTag(System.currentTimeMillis());
-            giftNumAnim.start(giftNum);
-        }
+        getActivity().finish();
     }
 
     /**
@@ -314,7 +205,6 @@ public class LayerFragment extends Fragment {
             public void keyBoardShow(int height) {/*软键盘显示：执行隐藏title动画，并修改listview高度和装载礼物容器的高度*/
                 animateToHide();
                 dynamicChangeListviewH(100);
-                dynamicChangeGiftParentH(true);
             }
 
             @Override
@@ -323,7 +213,6 @@ public class LayerFragment extends Fragment {
                 llInputParent.setVisibility(View.GONE);
                 animateToShow();
                 dynamicChangeListviewH(150);
-                dynamicChangeGiftParentH(false);
             }
         });
     }
@@ -337,27 +226,6 @@ public class LayerFragment extends Fragment {
         ViewGroup.LayoutParams layoutParams = lvmessage.getLayoutParams();
         layoutParams.height = DisplayUtil.dip2px(getActivity(), heightPX);
         lvmessage.setLayoutParams(layoutParams);
-    }
-
-    /**
-     * 动态修改礼物父布局的高度
-     *
-     * @param showhide
-     */
-    private void dynamicChangeGiftParentH(boolean showhide) {
-        if (showhide) {/*如果软键盘显示中*/
-            if (llgiftcontent.getChildCount() != 0) {
-                /*判断是否有礼物显示，如果有就修改父布局高度，如果没有就不作任何操作*/
-                ViewGroup.LayoutParams layoutParams = llgiftcontent.getLayoutParams();
-                layoutParams.height = llgiftcontent.getChildAt(0).getHeight();
-                llgiftcontent.setLayoutParams(layoutParams);
-            }
-        } else {/*如果软键盘隐藏中*/
-            /*就将装载礼物的容器的高度设置为包裹内容*/
-            ViewGroup.LayoutParams layoutParams = llgiftcontent.getLayoutParams();
-            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            llgiftcontent.setLayoutParams(layoutParams);
-        }
     }
 
     /**
@@ -412,56 +280,8 @@ public class LayerFragment extends Fragment {
         }
     }
 
-    /**
-     * 定时清除礼物
-     */
-    private void clearTiming() {
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                int count = llgiftcontent.getChildCount();
-                for (int i = 0; i < count; i++) {
-                    View view = llgiftcontent.getChildAt(i);
-                    CustomRoundView crvheadimage = (CustomRoundView) view.findViewById(R.id.crvheadimage);
-                    long nowtime = System.currentTimeMillis();
-                    long upTime = (Long) crvheadimage.getTag();
-                    if ((nowtime - upTime) >= 3000) {
-                        removeGiftView(i);
-                        return;
-                    }
-                }
-            }
-        };
-        timer = new Timer();
-        timer.schedule(task, 0, 3000);
-    }
-
-    /**
-     * 数字放大动画
-     */
-    public class NumAnim {
-        private Animator lastAnimator = null;
-
-        public void start(View view) {
-            if (lastAnimator != null) {
-                lastAnimator.removeAllListeners();
-                lastAnimator.end();
-                lastAnimator.cancel();
-            }
-            ObjectAnimator anim1 = ObjectAnimator.ofFloat(view, "scaleX", 1.3f, 1.0f);
-            ObjectAnimator anim2 = ObjectAnimator.ofFloat(view, "scaleY", 1.3f, 1.0f);
-            AnimatorSet animSet = new AnimatorSet();
-            lastAnimator = animSet;
-            animSet.setDuration(200);
-            animSet.setInterpolator(new OvershootInterpolator());
-            animSet.playTogether(anim1, anim2);
-            animSet.start();
-        }
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        timer.cancel();
     }
 }

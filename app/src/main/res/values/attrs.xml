@@ -5,4 +5,8 @@
         <attr name="border_width" format="dimension"></attr>
         <attr name="border_color" format="color"></attr>
     </declare-styleable>
+    <!---->
+    <declare-styleable name="GiftItemLayout">
+        <attr name="gift_index" format="integer" />
+    </declare-styleable>
 </resources>

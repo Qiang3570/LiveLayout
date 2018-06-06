@@ -47,7 +47,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
         android:layout_toRightOf="@id/ll_Content"
-        android:src="@mipmap/ic_headpic" />
+        android:src="@mipmap/gift_icon" />
 
     <com.johnny.livelayout.view.GiftCountTextView
         android:id="@+id/giftNum"
